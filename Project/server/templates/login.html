@@ -1,0 +1,24 @@
+<html>
+    <head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+        <title>Login</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/static/css/style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Login</h1>
+            <br>
+            <form id="login_form" action="" method="POST">
+                <input type="text" placeholder="Username" name="username" id="username" autocomplete="off" value="{{ request.form.username }}">
+                <input type="password" placeholder="Password" name="password" id="password" autocomplete="off" value="{{ request.form.password }}">
+                <input class="btn btn-default" type="submit" value="Login">
+            </form>
+            {% if status %}
+                <p class="status">{{ status|safe }}</p>
+            {% endif %}
+        </div>
+    </body>
+</html>
